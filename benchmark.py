@@ -187,7 +187,7 @@ print(f"Throughput (Speculative Sampling): {new_tokens/time_taken:.2f} tok/s")
 #%%
 # print out all results
 print("================")
-print(f"Overall: {i}, AS: {round(overall_result_as, 2)} tokens/sec, SPS: {round(overall_result_sps,2)} \
+print(f"Overall Result: AS: {round(overall_result_as, 2)} tokens/sec, SPS: {round(overall_result_sps,2)} \
   tokens/sec -> {round((overall_result_sps/overall_result_as), 2)} X Speedup")
 print("Subtask Result: ")
 for i in sub_result_as:
