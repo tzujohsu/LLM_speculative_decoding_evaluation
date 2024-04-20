@@ -1,186 +1,56 @@
-# https://github.com/feifeibear/LLMSpeculativeSampling/blob/main/sampling/speculative_sampling.py
 import torch
-from tqdm import tqdm
-import torch
+from utils import sample_from_draft_model, get_distribution, sample
+from transformers import AutoTokenizer
 
-from sampling.kvcache_model import KVCacheModel
-from sampling.utils import norm_logits, sample, max_fn
-from globals import Decoder
+def speculative_sampling(target_model, draft_model, prefix, target_len, tokenizer, gamma=4, temperature=1.0):
+    '''
+    Implementation of Algorithm 2 of the paper - Accelerating Large Language Model Decoding 
+    with Speculative Sampling (https://arxiv.org/abs/2302.01318)
+    '''
+    assert prefix.shape[0] == 1, 'Batch size should be 1'
 
-@torch.no_grad()
-def speculative_sampling(prefix : torch.Tensor, approx_model : torch.nn.Module, target_model : torch.nn.Module, 
-                         max_len : int , gamma : int = 4,
-                         temperature : float = 1, top_k : int = 0, top_p : float = 0, verbose : bool = False, random_seed : int = None) -> torch.Tensor:
-    """
-    Google version Speculative Sampling.
-    https://arxiv.org/pdf/2211.17192.pdf
+    n = prefix.shape[-1]
+    fin_prompt_seq = prefix.detach().clone()
+
+    while n < target_len:
+        n_orig = n
+        N = fin_prompt_seq.shape[-1]
+        draft_outputs, draft_logits = sample_from_draft_model(draft_model, fin_prompt_seq, gamma=gamma, temperature=temperature)
+
+        target_logits = target_model(draft_outputs).logits[:, -gamma-1:, :]
+
+        target_model_distribution = get_distribution(target_logits, temperature)
+        draft_model_distribution = get_distribution(draft_logits, temperature)
+
+        accepted_flag = 1
         
-    Adapted with KV Cache Optimization.
-        
-    Args:
-        x (torch.Tensor): input sequence, (batch, prefix_seqlen), Note that the batch dim is always 1 now.
-        approx_model (torch.nn.Module): approx model, the small one
-        target_model (torch.nn.Module): target model, the large one
-        max_len (int): the max overall generated tokens number.
-        gamma (int): $\gamma$, the token number small model guesses.
-        temperature (float, optional): Defaults to 1.
-        top_k (int, optional): Defaults to 0.
-        top_p (float, optional): Defaults to 0.
-
-    Returns:
-        torch.Tensor: generated tokens (batch, target_seqlen)
-    """
-    seq_len = prefix.shape[1]
-    T = seq_len + max_len
-    
-    assert prefix.shape[0] == 1, "input batch size must be 1"
-
-    assert approx_model.device == target_model.device
-    
-    device = target_model.device
-    
-    approx_model_cache = KVCacheModel(approx_model, temperature, top_k, top_p)
-    target_model_cache = KVCacheModel(target_model, temperature, top_k, top_p)
-    
-    resample_count = 0
-    target_sample_count = 0
-    accepted_count = 0
-    
-    while prefix.shape[1] < T:
-        # q = M_q[prefix + x_0, x_1, .., x_(gamma-2)]
-        prefix_len = prefix.shape[1]
-
-        x = approx_model_cache.generate(prefix, gamma)
-        _ = target_model_cache.generate(x, 1)
-        
-        n = prefix_len + gamma - 1
-        
-
-        for i in range(gamma):
-            if random_seed:
-                torch.manual_seed(random_seed)
-            r = torch.rand(1, device = device)
-            j = x[:, prefix_len + i]
+        for t in range(gamma):
+            numerator = target_model_distribution[:, t, draft_outputs[0, N+t]]
+            denominator = draft_model_distribution[:, t, draft_outputs[0, N+t]]
+            ratio = (numerator / denominator)
+            r = torch.rand_like(numerator) # uniform_distribution
+            ones_tensor = torch.ones_like(numerator)
             
-            if r > (target_model_cache._prob_history[:, prefix_len + i - 1, j]) / (approx_model_cache._prob_history[:, prefix_len + i - 1, j]):
-                # reject
-                n = prefix_len + i - 1
+            # Rejection Sampling
+            ## Acceptance
+            if (r < torch.min(ones_tensor, ratio)).any():
+                fin_prompt_seq = torch.concat([fin_prompt_seq, draft_outputs[:, N+t].unsqueeze(dim=-1)], dim=-1)
+                n += 1
+
+            ## Rejection
+            else:
+                new_dist = (target_model_distribution[:, t, :] - draft_model_distribution[:, t, :])
+                new_dist = torch.max(torch.zeros_like(new_dist), new_dist)
+                new_dist = new_dist / new_dist.sum(dim=-1, keepdim=True)
+                token_id = torch.multinomial(new_dist, num_samples=1)[0]
+                fin_prompt_seq = torch.concat([fin_prompt_seq, token_id[None,...]], dim=-1)
+                accepted_flag = 0
                 break
-            
-            if verbose:
-                print(f"approx guess accepted {j[0]}: \033[31m{Decoder().decode(torch.tensor([j]))}\033[0m")
 
-            accepted_count += 1
-        
-        # print(f"n : {n}, i : {i}, prefix_len + gamma - 1: {prefix_len + gamma - 1}")
-        assert n >= prefix_len - 1, f"n {n}, prefix_len {prefix_len}"
-        prefix = x[:, :n + 1]
-        
-        approx_model_cache.rollback(n+1)
-        
-        assert approx_model_cache._prob_history.shape[-2] <= n + 1, f"approx_model prob list shape {approx_model_cache._prob_history.shape}, n {n}"
-        
-        if n < prefix_len + gamma - 1:
-            # reject someone, sample from the pos n
-            t = sample(max_fn(target_model_cache._prob_history[:, n, :] - approx_model_cache._prob_history[:, n, :]))
-            if verbose:
-                print(f"target resamples at position {n}: \033[34m{Decoder().decode(t)}\033[0m")
-            resample_count += 1
-            target_model_cache.rollback(n+1)
-        else:
-            # all approx model decoding accepted
-            assert n == target_model_cache._prob_history.shape[1] - 1
-            t = sample(target_model_cache._prob_history[:, -1, :])
-            if verbose:
-                print(f"target samples {n}: \033[35m{Decoder().decode(t)}\033[0m")
-            target_sample_count += 1
-            target_model_cache.rollback(n+2)
-        
-        
-        prefix = torch.cat((prefix, t), dim=1)
+        if accepted_flag == 1:
+            sample_token = sample(target_logits[:, -1, :], temperature=temperature)
+            fin_prompt_seq = torch.concat([fin_prompt_seq, sample_token[None,...]], dim=-1)
 
-    if verbose:
-        print(f"generated tokens numbers {prefix.shape[-1] - seq_len}, accepted_count {accepted_count}, target_sample_count {target_sample_count}, resample_count {resample_count}")
-    return prefix
+        n += 1
 
-
-@torch.no_grad()
-def speculative_sampling_v2(prefix : torch.Tensor, approx_model : torch.nn.Module, target_model : torch.nn.Module, 
-                         max_len : int , gamma : int = 4,
-                         temperature : float = 1, top_k : int = 0, top_p : float = 0, random_seed : int = None) -> torch.Tensor:
-    """
-    DeepMind version Speculative Sampling.
-    Accelerating Large Language Model Decoding with Speculative Sampling
-    https://arxiv.org/abs/2302.01318
-    No KV Cache Optimization
-    
-    Args:
-        x (torch.Tensor): input sequence, (batch, prefix_seqlen), Note that the batch dim is always 1 now.
-        approx_model (torch.nn.Module): approx model, the small one
-        target_model (torch.nn.Module): target model, the large one
-        max_len (int): the max overall generated tokens number.
-        gamma (int): $\gamma$, the token number small model guesses.
-        temperature (float, optional): Defaults to 1.
-        top_k (int, optional): Defaults to 0.
-        top_p (float, optional): Defaults to 0.
-
-    Returns:
-        torch.Tensor: generated tokens (batch, target_seqlen)
-    """
-    seq_len = prefix.shape[1]
-    T = seq_len + max_len
-    
-    assert prefix.shape[0] == 1, "input batch size must be 1"
-
-    with tqdm(total=T, desc="speculative sampling") as pbar:
-        while prefix.shape[1] < T:
-            # q = M_q[prefix + x_0, x_1, .., x_(gamma-2)]
-            x = prefix
-            prefix_len = prefix.shape[1]
-            for _ in range(gamma):
-                # p.logits shape (batch, seq, vocab)
-                q = approx_model(x).logits
-                next_tok = sample(norm_logits(q[:, -1, :], 
-                                  temperature, top_k, top_p))
-                x = torch.cat((x, next_tok), dim=1)
-            
-            # normalize the logits
-            for i in range(q.shape[1]):
-                q[:,i,:] = norm_logits(q[:,i,:],
-                                temperature, top_k, top_p)
-            # p  = M_p[prefix + x_0, x_0, .., x_(gamma-1)]
-            p = target_model(x).logits
-            for i in range(p.shape[1]):
-                p[:,i,:] = norm_logits(p[:,i,:],
-                                temperature, top_k, top_p)
-
-            # n the end position of the valid prefix
-            # x = x_[:prefix_len-1] + x_0, ... x_(gamma-1)
-            
-            is_all_accept = True
-            n = prefix_len - 1
-            for i in range(gamma):
-                if random_seed:
-                    torch.manual_seed(random_seed)
-                r = torch.rand(1, device = p.device)
-                j = x[:, prefix_len + i]
-                
-                if r < torch.min(torch.tensor([1], device=q.device), p[:, prefix_len + i - 1, j] / q[:, prefix_len + i - 1, j]):
-                    # accept, and update n
-                    n += 1
-                else:
-                    # reject
-                    t = sample(max_fn(p[:, n, :] - q[:, n, :]))
-                    is_all_accept = False
-                    break
-         
-            prefix = x[:, :n + 1]
-            
-            if is_all_accept:
-                t = sample(p[:, -1, :])
-            
-            prefix = torch.cat((prefix, t), dim=1)
-            pbar.update(n - pbar.n)
-
-    return prefix
-
+    return fin_prompt_seq
