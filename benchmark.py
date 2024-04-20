@@ -19,7 +19,7 @@ def parse_arguments():
     parser.add_argument('--approx_model_name', type=str, default="double7/vicuna-68m")
     parser.add_argument('--target_model_name', type=str, default="lmsys/vicuna-7b-v1.3")
     parser.add_argument('--seed', '-s', type=int, default=None, help='set a random seed, which can makes the result reproducible')
-    parser.add_argument('--max_tokens', '-M', type=int, default=50, help='max token number generated.')
+    parser.add_argument('--max_tokens', '-M', type=int, default=30, help='max token number generated.')
     parser.add_argument('--gamma', '-g', type=int, default=4, help='# guess time.')
     parser.add_argument('--temperature', '-t', type=int, default=0, help='temperature')
     parser.add_argument('--datafile_path', '-f', type=str, default='combined_data.jsonl', help='temperature')
