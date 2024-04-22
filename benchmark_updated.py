@@ -209,6 +209,8 @@ print("================")
 print(f"Overall Result: AS: {round(overall_result_as, 2)} tokens/sec, SPS: {round(overall_result_sps,2)} \
   tokens/sec -> {round((overall_result_sps/overall_result_as), 2)} X Speedup")
 
+print(f"Average alpha: {alphas.mean().item():.2f}")
+
 if args.subtask_result:
   print("Subtask Result: ")
   for i in sub_result_as:
