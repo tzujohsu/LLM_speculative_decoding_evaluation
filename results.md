@@ -46,6 +46,29 @@ Subtask: law analytics, AS: 6515392.2 tokens/sec, SPS: 6310176.96 tokens/sec -> 
 Subtask: grammar correction, AS: 52.63 tokens/sec, SPS: 70.34 tokens/sec -> 1.33650009500285 X Speedup
 ```
 
+Configuration:
+* Target: lmsys/vicuna-7b-v1.3
+* Approx: Jiayi-Pan/Tiny-Vicuna-1B
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+
+```bash
+Overall Result: AS: 570.98 tokens/sec, SPS: 411.3   tokens/sec -> 0.72 X Speedup
+Subtask Result: 
+Subtask: multi-turn, AS: 33.87 tokens/sec, SPS: 23.15 tokens/sec -> 0.6834957189253026 X Speedup
+Subtask: translation, AS: 373.35 tokens/sec, SPS: 281.89 tokens/sec -> 0.7550287933574393 X Speedup
+Subtask: summarization, AS: 36684094.39 tokens/sec, SPS: 36011214.2 tokens/sec -> 0.9816574403378642 X Speedup
+Subtask: qa, AS: 27.2 tokens/sec, SPS: 23.87 tokens/sec -> 0.8775735294117648 X Speedup
+Subtask: math_reasoning, AS: 77103.19 tokens/sec, SPS: 25053.92 tokens/sec -> 0.3249401224514835 X Speedup
+Subtask: rag, AS: 35034918.79 tokens/sec, SPS: 33354615.34 tokens/sec -> 0.9520391795376558 X Speedup
+Subtask: law analytics, AS: 6606425.52 tokens/sec, SPS: 6468892.28 tokens/sec -> 0.979181898050067 X Speedup
+Subtask: grammar correction, AS: 52.98 tokens/sec, SPS: 37.4 tokens/sec -> 0.7059267648169121 X Speedup
+```
+
+
+
+
 #### Bloom
 Configuration:
 * Target: bigscience/bloom-7b1
@@ -67,6 +90,24 @@ Subtask: law analytics, AS: 5662084.29 tokens/sec, SPS: 5381896.86 tokens/sec ->
 Subtask: grammar correction, AS: 42.67 tokens/sec, SPS: 43.71 tokens/sec -> 1.0243730958518866 X Speedup
 ```
 
+Configuration:
+* Target: bigscience/bloom-7b1
+* Approx: bigscience/bloom-1b7
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+```bash
+Overall Result, AS: 449.23 tokens/sec, SPS: 492.83   tokens/sec -> 1.1 X Speedup
+Subtask Result: 
+Subtask: multi-turn, AS: 33.11 tokens/sec, SPS: 42.15 tokens/sec -> 1.2730292962851102 X Speedup
+Subtask: translation, AS: 266.92 tokens/sec, SPS: 194.5 tokens/sec -> 0.7286827513861831 X Speedup
+Subtask: summarization, AS: 30887192.35 tokens/sec, SPS: 29701623.96 tokens/sec -> 0.9616161813425557 X Speedup
+Subtask: qa, AS: 24.2 tokens/sec, SPS: 25.97 tokens/sec -> 1.0731404958677686 X Speedup
+Subtask: math_reasoning, AS: 2944.41 tokens/sec, SPS: 5027.9 tokens/sec -> 1.7076086550446439 X Speedup
+Subtask: rag, AS: 29042319.97 tokens/sec, SPS: 27314328.7 tokens/sec -> 0.9405009216968557 X Speedup
+Subtask: law analytics, AS: 5922718.94 tokens/sec, SPS: 5608404.59 tokens/sec -> 0.946930733471543 X Speedup
+Subtask: grammar correction, AS: 42.95 tokens/sec, SPS: 48.17 tokens/sec -> 1.121536670547148 X Speedup
+```
 
 #### facebook/opt
 
@@ -151,3 +192,28 @@ Subtask: rag, AS: 23609351.96 tokens/sec, SPS: 20427560.78 tokens/sec -> 0.86523
 Subtask: law analytics, AS: 5607242.59 tokens/sec, SPS: 5359088.05 tokens/sec -> 0.9557439265348425 X Speedup
 Subtask: grammar correction, AS: 45.83 tokens/sec, SPS: 45.0 tokens/sec -> 0.9818895919703251 X Speedup
 ```
+
+#### facebook/llama-2
+
+Configuration:
+* Target: meta-llama/Llama-2-7b-hf
+* Approx: TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+
+``` bash
+Overall Result: AS: 572.87 tokens/sec, SPS: 509.97   tokens/sec -> 0.89 X Speedup
+Subtask Result: 
+Subtask: multi-turn, AS: 34.29 tokens/sec, SPS: 29.51 tokens/sec -> 0.8606007582385535 X Speedup
+Subtask: translation, AS: 372.01 tokens/sec, SPS: 273.74 tokens/sec -> 0.7358404343969248 X Speedup
+Subtask: summarization, AS: 36487518.03 tokens/sec, SPS: 35491087.14 tokens/sec -> 0.9726911847174495 X Speedup
+Subtask: qa, AS: 27.2 tokens/sec, SPS: 28.82 tokens/sec -> 1.0595588235294118 X Speedup
+Subtask: math_reasoning, AS: 76846.59 tokens/sec, SPS: 24978.34 tokens/sec -> 0.325041618632655 X Speedup
+Subtask: rag, AS: 34808129.52 tokens/sec, SPS: 33737839.48 tokens/sec -> 0.9692517220902364 X Speedup
+Subtask: law analytics, AS: 6636933.78 tokens/sec, SPS: 6530898.8 tokens/sec -> 0.9840234988754099 X Speedup
+Subtask: grammar correction, AS: 53.02 tokens/sec, SPS: 59.82 tokens/sec -> 1.1282534892493399 X Speedup
+```
+
+
+
