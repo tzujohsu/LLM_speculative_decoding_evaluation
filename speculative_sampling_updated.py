@@ -1,5 +1,5 @@
 import torch
-from utils import sample_from_draft_model, get_distribution, sample
+from utils_updated import sample_from_draft_model, get_distribution, sample
 from transformers import AutoTokenizer
 
 def speculative_sampling(target_model, draft_model, prefix, target_len, tokenizer, gamma=4, temperature=1.0):

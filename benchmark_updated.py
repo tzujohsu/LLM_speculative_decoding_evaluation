@@ -6,7 +6,7 @@ from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModelForSeq2SeqLM
 from autoregressive_sampling_updated import autoregressive_sampling
 from speculative_sampling_updated import speculative_sampling
-from utils import load_data, check_function
+from utils_updated import load_data, check_function
 import numpy as np
 import argparse
 
@@ -71,7 +71,7 @@ print()
 
 
 #%% 
-# print("Benchmarking naive Autoregressive Sampling...")
+print("Benchmarking naive Autoregressive Sampling...")
 ## Autoregressive
 # Warmup
 tokens = autoregressive_sampling(target_model, initial_prompt_seq=inputs_sample.input_ids, 
