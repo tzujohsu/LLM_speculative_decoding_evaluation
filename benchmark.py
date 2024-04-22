@@ -24,6 +24,7 @@ def parse_arguments():
     parser.add_argument('--temperature', '-t', type=int, default=0, help='temperature')
     parser.add_argument('--datafile_path', '-f', type=str, default='combined_data.jsonl', help='temperature')
     parser.add_argument('--output_dir', '-o', type=str, default='/outputs', help='output-txt')
+    parser.add_argument('--subtask_result', type=bool, default=True, help='whether print out subtask result')
     args = parser.parse_args()
     return args
 
@@ -189,8 +190,10 @@ print(f"Throughput (Speculative Sampling): {new_tokens/time_taken:.2f} tok/s")
 print("================")
 print(f"Overall Result: AS: {round(overall_result_as, 2)} tokens/sec, SPS: {round(overall_result_sps,2)} \
   tokens/sec -> {round((overall_result_sps/overall_result_as), 2)} X Speedup")
-print("Subtask Result: ")
-for i in sub_result_as:
-  AS = round((sub_result_as[i][0]/sub_result_as[i][1]),2)
-  SPS = round((sub_result_sps[i][0]/sub_result_sps[i][1]),2)
-  print(f"Subtask: {i}, AS: {AS} tokens/sec, SPS: {SPS} tokens/sec -> {(SPS/AS)} X Speedup")
+
+if args.subtask_result:
+  print("Subtask Result: ")
+  for i in sub_result_as:
+    AS = round((sub_result_as[i][0]/sub_result_as[i][1]),2)
+    SPS = round((sub_result_sps[i][0]/sub_result_sps[i][1]),2)
+    print(f"Subtask: {i}, AS: {AS} tokens/sec, SPS: {SPS} tokens/sec -> {(SPS/AS)} X Speedup")
