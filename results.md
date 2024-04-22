@@ -1,5 +1,30 @@
 ### Experiment Results
 
+#### T5
+Configuration:
+* Target: google-t5/t5-base
+* Approx: google-t5/t5-small
+* Temperature: 0
+* max token length: 30
+* gamma: 7
+
+```bash
+Overall Result: AS: 1032.37 tokens/sec, SPS: 730.47   tokens/sec -> 0.71 X Speedup
+Average alpha: 0.40
+Subtask Result: 
+Subtask: multi-turn, AS: 53.21 tokens/sec, SPS: 38.59 tokens/sec -> 0.7252396166134186 X Speedup
+Subtask: translation, AS: 938.08 tokens/sec, SPS: 441.52 tokens/sec -> 0.47066348285860476 X Speedup
+Subtask: summarization, AS: 20322974.11 tokens/sec, SPS: 8093321.58 tokens/sec -> 0.39823509768767795 X Speedup
+Subtask: qa, AS: 65.62 tokens/sec, SPS: 80.37 tokens/sec -> 1.2247790307832978 X Speedup
+Subtask: math_reasoning, AS: 9283.27 tokens/sec, SPS: 12169.23 tokens/sec -> 1.3108775248376918 X Speedup
+Subtask: rag, AS: 18933581.31 tokens/sec, SPS: 4301110.48 tokens/sec -> 0.22716835286350803 X Speedup
+Subtask: law analytics, AS: 3978023.85 tokens/sec, SPS: 1564435.41 tokens/sec -> 0.3932694898247028 X Speedup
+Subtask: grammar correction, AS: 136.45 tokens/sec, SPS: 181.05 tokens/sec -> 1.3268596555514842 X Speedup
+```
+
+
+
+
 #### Vicuna
 Configuration:
 * Target: lmsys/vicuna-7b-v1.3

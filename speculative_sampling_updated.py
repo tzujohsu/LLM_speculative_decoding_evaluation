@@ -19,7 +19,7 @@ def speculative_sampling(target_model, draft_model, prefix, target_len, tokenize
     while n < target_len:
         n_orig = n
         N = fin_prompt_seq.shape[-1]
-        draft_outputs, draft_logits = sample_from_draft_model(draft_model, fin_prompt_seq, gamma=gamma, temperature=temperature, is_t5=is_t5)
+        draft_outputs, draft_logits = sample_from_draft_model(draft_model, fin_prompt_seq, gamma=gamma, temperature=temperature)
         
         if is_t5:
             target_logits = target_model(input_ids=draft_outputs, decoder_input_ids=draft_outputs).logits[:, -gamma-1:, :]
