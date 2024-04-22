@@ -65,6 +65,24 @@ Subtask: law analytics, AS: 5662084.29 tokens/sec, SPS: 5381896.86 tokens/sec ->
 Subtask: grammar correction, AS: 42.67 tokens/sec, SPS: 43.71 tokens/sec -> 1.0243730958518866 X Speedup
 ```
 
+Configuration:
+* Target: bigscience/bloom-7b1
+* Approx: bigscience/bloom-1b7
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+```bash
+Overall Result, AS: 449.23 tokens/sec, SPS: 492.83   tokens/sec -> 1.1 X Speedup
+Subtask Result: 
+Subtask: multi-turn, AS: 33.11 tokens/sec, SPS: 42.15 tokens/sec -> 1.2730292962851102 X Speedup
+Subtask: translation, AS: 266.92 tokens/sec, SPS: 194.5 tokens/sec -> 0.7286827513861831 X Speedup
+Subtask: summarization, AS: 30887192.35 tokens/sec, SPS: 29701623.96 tokens/sec -> 0.9616161813425557 X Speedup
+Subtask: qa, AS: 24.2 tokens/sec, SPS: 25.97 tokens/sec -> 1.0731404958677686 X Speedup
+Subtask: math_reasoning, AS: 2944.41 tokens/sec, SPS: 5027.9 tokens/sec -> 1.7076086550446439 X Speedup
+Subtask: rag, AS: 29042319.97 tokens/sec, SPS: 27314328.7 tokens/sec -> 0.9405009216968557 X Speedup
+Subtask: law analytics, AS: 5922718.94 tokens/sec, SPS: 5608404.59 tokens/sec -> 0.946930733471543 X Speedup
+Subtask: grammar correction, AS: 42.95 tokens/sec, SPS: 48.17 tokens/sec -> 1.121536670547148 X Speedup
+```
 
 #### facebook/opt
 
