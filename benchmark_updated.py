@@ -4,8 +4,8 @@ import random
 import torch
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModelWithLMHead
-from autoregressive_sampling import autoregressive_sampling
-from speculative_sampling import speculative_sampling
+from autoregressive_sampling_updated import autoregressive_sampling
+from speculative_sampling_updated import speculative_sampling
 from utils import load_data, check_function
 import numpy as np
 import argparse
