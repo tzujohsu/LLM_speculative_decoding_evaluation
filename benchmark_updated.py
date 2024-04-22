@@ -3,7 +3,7 @@ import time
 import random
 import torch
 from tqdm import tqdm
-from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModelWithLMHead
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModelForSeq2SeqLM
 from autoregressive_sampling_updated import autoregressive_sampling
 from speculative_sampling_updated import speculative_sampling
 from utils import load_data, check_function
@@ -35,12 +35,12 @@ args = parse_arguments()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 if "t5" in args.target_model_name.lower():
-    target_model = AutoModelWithLMHead.from_pretrained(args.target_model_name).to(device)
+    target_model = AutoModelForSeq2SeqLM.from_pretrained(args.target_model_name).to(device)
 else:
     target_model = AutoModelForCausalLM.from_pretrained(args.target_model_name).to(device)
 
 if "t5" in args.approx_model_name.lower():
-    draft_model = AutoModelWithLMHead.from_pretrained(args.approx_model_name).to(device)
+    draft_model = AutoModelForSeq2SeqLM.from_pretrained(args.approx_model_name).to(device)
 else:
     draft_model = AutoModelForCausalLM.from_pretrained(args.approx_model_name).to(device)
 
