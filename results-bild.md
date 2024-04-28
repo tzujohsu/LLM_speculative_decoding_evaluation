@@ -38,3 +38,82 @@ Subtask: grammar correction, AS: 46.81 tokens/sec, SPS: 67.77 tokens/sec -> 1.44
 Subtask: grammar correction, AS: 46.81 tokens/sec, BiLD: 50.04 tokens/sec -> 1.0690023499252297 X Speedup
 
 ```
+
+* Target: facebook/opt-6.7b
+* Approx:  facebook/opt-350m
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+* fallback_thres: 0.6
+* rollback_thres: 3
+
+```bash
+
+Overall Result: AS: 482.26 tokens/sec, SPS: 553.63         tokens/sec -> 1.15 X Speedup
+Overall Result: AS: 482.26 tokens/sec, BiLD: 431.47         tokens/sec -> 0.89 X Speedup
+==================
+Subtask Result: 
+Subtask: multi-turn, AS: 33.58 tokens/sec, SPS: 41.92 tokens/sec -> 1.2483621203097082 X Speedup
+Subtask: multi-turn, AS: 33.58 tokens/sec, BiLD: 28.92 tokens/sec -> 0.8612269207861823 X Speedup
+
+Subtask: translation, AS: 1099.8 tokens/sec, SPS: 1021.2 tokens/sec -> 0.9285324604473542 X Speedup
+Subtask: translation, AS: 1099.8 tokens/sec, BiLD: 1245.53 tokens/sec -> 1.1325059101654846 X Speedup
+
+Subtask: summarization, AS: 30088726.85 tokens/sec, SPS: 28878492.11 tokens/sec -> 0.9597778016320421 X Speedup
+Subtask: summarization, AS: 30088726.85 tokens/sec, BiLD: 25842467.12 tokens/sec -> 0.8588753937257402 X Speedup
+
+Subtask: qa, AS: 25.43 tokens/sec, SPS: 30.24 tokens/sec -> 1.1891466771529688 X Speedup
+Subtask: qa, AS: 25.43 tokens/sec, BiLD: 23.8 tokens/sec -> 0.9359024773889107 X Speedup
+
+Subtask: math_reasoning, AS: 3016.16 tokens/sec, SPS: 3184.25 tokens/sec -> 1.055729802132513 X Speedup
+Subtask: math_reasoning, AS: 3016.16 tokens/sec, BiLD: 2630.5 tokens/sec -> 0.8721354304811416 X Speedup
+
+Subtask: rag, AS: 28487564.8 tokens/sec, SPS: 27260241.19 tokens/sec -> 0.9569172156828232 X Speedup
+Subtask: rag, AS: 28487564.8 tokens/sec, BiLD: 26577721.36 tokens/sec -> 0.9329586978245329 X Speedup
+
+Subtask: law analytics, AS: 5797205.68 tokens/sec, SPS: 5598722.43 tokens/sec -> 0.9657622549628082 X Speedup
+Subtask: law analytics, AS: 5797205.68 tokens/sec, BiLD: 5416399.61 tokens/sec -> 0.9343121339796936 X Speedup
+
+Subtask: grammar correction, AS: 46.69 tokens/sec, SPS: 51.8 tokens/sec -> 1.1094452773613193 X Speedup
+Subtask: grammar correction, AS: 46.69 tokens/sec, BiLD: 42.45 tokens/sec -> 0.9091882630113516 X Speedup
+```
+
+* Target: facebook/opt-6.7b
+* Approx:  facebook/opt-125m
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+* fallback_thres: 0.6
+* rollback_thres: 4
+
+
+```bash
+Overall Result: AS: 479.62 tokens/sec, SPS: 684.58         tokens/sec -> 1.43 X Speedup
+Overall Result: AS: 479.62 tokens/sec, BiLD: 503.65         tokens/sec -> 1.05 X Speedup
+==================
+Subtask Result: 
+Subtask: multi-turn, AS: 33.39 tokens/sec, SPS: 51.65 tokens/sec -> 1.546870320455226 X Speedup
+Subtask: multi-turn, AS: 33.39 tokens/sec, BiLD: 33.57 tokens/sec -> 1.005390835579515 X Speedup
+
+Subtask: translation, AS: 1095.96 tokens/sec, SPS: 1219.8 tokens/sec -> 1.1129968247016313 X Speedup
+Subtask: translation, AS: 1095.96 tokens/sec, BiLD: 1325.88 tokens/sec -> 1.2097886784189205 X Speedup
+
+Subtask: summarization, AS: 30672623.76 tokens/sec, SPS: 29632325.46 tokens/sec -> 0.9660838176694669 X Speedup
+Subtask: summarization, AS: 30672623.76 tokens/sec, BiLD: 28689359.99 tokens/sec -> 0.9353409155500297 X Speedup
+
+Subtask: qa, AS: 25.26 tokens/sec, SPS: 36.91 tokens/sec -> 1.4612034837688042 X Speedup
+Subtask: qa, AS: 25.26 tokens/sec, BiLD: 28.0 tokens/sec -> 1.1084718923198733 X Speedup
+
+Subtask: math_reasoning, AS: 2994.44 tokens/sec, SPS: 3422.26 tokens/sec -> 1.1428714550967793 X Speedup
+Subtask: math_reasoning, AS: 2994.44 tokens/sec, BiLD: 3138.39 tokens/sec -> 1.0480724275657551 X Speedup
+
+Subtask: rag, AS: 29141830.49 tokens/sec, SPS: 24229750.08 tokens/sec -> 0.8314422832263204 X Speedup
+Subtask: rag, AS: 29141830.49 tokens/sec, BiLD: 26685039.37 tokens/sec -> 0.9156953740142355 X Speedup
+
+Subtask: law analytics, AS: 5891315.1 tokens/sec, SPS: 5732409.86 tokens/sec -> 0.9730272040617893 X Speedup
+Subtask: law analytics, AS: 5891315.1 tokens/sec, BiLD: 5458870.16 tokens/sec -> 0.9265961958137328 X Speedup
+
+Subtask: grammar correction, AS: 46.58 tokens/sec, SPS: 66.85 tokens/sec -> 1.4351653069987118 X Speedup
+Subtask: grammar correction, AS: 46.58 tokens/sec, BiLD: 49.94 tokens/sec -> 1.0721339630742808 X Speedup
+
+```
