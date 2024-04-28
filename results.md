@@ -1,90 +1,5 @@
 ### Experiment Results
 
-#### T5
-Configuration:
-* Target: google-t5/t5-base
-* Approx: google-t5/t5-small
-* Temperature: 0
-* max token length: 30
-* gamma: 7
-
-```bash
-Overall Result: AS: 1032.37 tokens/sec, SPS: 730.47   tokens/sec -> 0.71 X Speedup
-Average alpha: 0.40
-Subtask Result: 
-Subtask: multi-turn, AS: 53.21 tokens/sec, SPS: 38.59 tokens/sec -> 0.7252396166134186 X Speedup
-Subtask: translation, AS: 938.08 tokens/sec, SPS: 441.52 tokens/sec -> 0.47066348285860476 X Speedup
-Subtask: summarization, AS: 20322974.11 tokens/sec, SPS: 8093321.58 tokens/sec -> 0.39823509768767795 X Speedup
-Subtask: qa, AS: 65.62 tokens/sec, SPS: 80.37 tokens/sec -> 1.2247790307832978 X Speedup
-Subtask: math_reasoning, AS: 9283.27 tokens/sec, SPS: 12169.23 tokens/sec -> 1.3108775248376918 X Speedup
-Subtask: rag, AS: 18933581.31 tokens/sec, SPS: 4301110.48 tokens/sec -> 0.22716835286350803 X Speedup
-Subtask: law analytics, AS: 3978023.85 tokens/sec, SPS: 1564435.41 tokens/sec -> 0.3932694898247028 X Speedup
-Subtask: grammar correction, AS: 136.45 tokens/sec, SPS: 181.05 tokens/sec -> 1.3268596555514842 X Speedup
-```
-
-Configuration:
-* Target: google-t5/t5-base
-* Approx: google-t5/t5-small
-* Temperature: 1
-* max token length: 30
-* gamma: 7
-
-```bash
-Overall Result: AS: 1081.95 tokens/sec, SPS: 549.34   tokens/sec -> 0.51 X Speedup
-Average alpha: 0.34
-Subtask Result: 
-Subtask: multi-turn, AS: 57.67 tokens/sec, SPS: 32.62 tokens/sec -> 0.5656320443904976 X Speedup
-Subtask: translation, AS: 920.22 tokens/sec, SPS: 388.61 tokens/sec -> 0.4223011888461455 X Speedup
-Subtask: summarization, AS: 20823192.57 tokens/sec, SPS: 8040546.15 tokens/sec -> 0.38613416857048255 X Speedup
-Subtask: qa, AS: 64.33 tokens/sec, SPS: 69.14 tokens/sec -> 1.074770713508472 X Speedup
-Subtask: math_reasoning, AS: 9029.51 tokens/sec, SPS: 8425.39 tokens/sec -> 0.9330949298466915 X Speedup
-Subtask: rag, AS: 18833205.34 tokens/sec, SPS: 2221323.38 tokens/sec -> 0.11794717574082372 X Speedup
-Subtask: law analytics, AS: 3881962.54 tokens/sec, SPS: 1518393.39 tokens/sec -> 0.3911406600023502 X Speedup
-Subtask: grammar correction, AS: 141.13 tokens/sec, SPS: 154.51 tokens/sec -> 1.0948062070431517 X Speedup
-```
-
-Configuration:
-* Target: google-t5/t5-base
-* Approx: google-t5/t5-small
-* Temperature: 0
-* max token length: 30
-* gamma: 5
-
-```bash
-Overall Result: AS: 1035.16 tokens/sec, SPS: 735.61   tokens/sec -> 0.71 X Speedup
-Average alpha: 0.40
-Subtask Result: 
-Subtask: multi-turn, AS: 53.67 tokens/sec, SPS: 38.83 tokens/sec -> 0.7234954350661449 X Speedup
-Subtask: translation, AS: 953.29 tokens/sec, SPS: 439.89 tokens/sec -> 0.46144405165269753 X Speedup
-Subtask: summarization, AS: 21672271.19 tokens/sec, SPS: 7799143.65 tokens/sec -> 0.35986738914556743 X Speedup
-Subtask: qa, AS: 65.03 tokens/sec, SPS: 81.71 tokens/sec -> 1.2564970013839765 X Speedup
-Subtask: math_reasoning, AS: 9099.16 tokens/sec, SPS: 12410.99 tokens/sec -> 1.3639709599567433 X Speedup
-Subtask: rag, AS: 19593982.27 tokens/sec, SPS: 4272686.83 tokens/sec -> 0.21806117669820674 X Speedup
-Subtask: law analytics, AS: 4021463.13 tokens/sec, SPS: 1583827.02 tokens/sec -> 0.3938434765657046 X Speedup
-Subtask: grammar correction, AS: 135.53 tokens/sec, SPS: 180.57 tokens/sec -> 1.3323249465063085 X Speedup
-```
-
-Configuration:
-* Target: google-t5/t5-base
-* Approx: google-t5/t5-small
-* Temperature: 1
-* max token length: 30
-* gamma: 5
-
-```bash
-Overall Result: AS: 1086.72 tokens/sec, SPS: 637.77   tokens/sec → 0.59 X Speedup
-Average alpha: 0.35
-Subtask Result:
-Subtask: multi-turn, AS: 57.94 tokens/sec, SPS: 36.41 tokens/sec → 0.6284086986537797 X Speedup
-Subtask: translation, AS: 981.69 tokens/sec, SPS: 336.05 tokens/sec → 0.3423178396438794 X Speedup
-Subtask: summarization, AS: 21877590.89 tokens/sec, SPS: 8132686.28 tokens/sec → 0.3717359155718265 X Speedup
-Subtask: qa, AS: 65.74 tokens/sec, SPS: 70.45 tokens/sec → 1.0716458777000306 X Speedup
-Subtask: math_reasoning, AS: 9055.9 tokens/sec, SPS: 6463.84 tokens/sec → 0.713771132631765 X Speedup
-Subtask: rag, AS: 19076138.12 tokens/sec, SPS: 2238696.17 tokens/sec → 0.11735583774437464 X Speedup
-Subtask: law analytics, AS: 3914333.65 tokens/sec, SPS: 1534270.19 tokens/sec → 0.39196203675688196 X Speedup
-Subtask: grammar correction, AS: 134.51 tokens/sec, SPS: 157.64 tokens/sec → 1.1719574752806483 X Speedup
-```
-
 #### Vicuna
 Configuration:
 * Target: lmsys/vicuna-7b-v1.3
@@ -275,5 +190,88 @@ Subtask: law analytics, AS: 6636933.78 tokens/sec, SPS: 6530898.8 tokens/sec -> 
 Subtask: grammar correction, AS: 53.02 tokens/sec, SPS: 59.82 tokens/sec -> 1.1282534892493399 X Speedup
 ```
 
+#### T5
+Configuration:
+* Target: google-t5/t5-base
+* Approx: google-t5/t5-small
+* Temperature: 0
+* max token length: 30
+* gamma: 7
 
+```bash
+Overall Result: AS: 1032.37 tokens/sec, SPS: 730.47   tokens/sec -> 0.71 X Speedup
+Average alpha: 0.40
+Subtask Result: 
+Subtask: multi-turn, AS: 53.21 tokens/sec, SPS: 38.59 tokens/sec -> 0.7252396166134186 X Speedup
+Subtask: translation, AS: 938.08 tokens/sec, SPS: 441.52 tokens/sec -> 0.47066348285860476 X Speedup
+Subtask: summarization, AS: 20322974.11 tokens/sec, SPS: 8093321.58 tokens/sec -> 0.39823509768767795 X Speedup
+Subtask: qa, AS: 65.62 tokens/sec, SPS: 80.37 tokens/sec -> 1.2247790307832978 X Speedup
+Subtask: math_reasoning, AS: 9283.27 tokens/sec, SPS: 12169.23 tokens/sec -> 1.3108775248376918 X Speedup
+Subtask: rag, AS: 18933581.31 tokens/sec, SPS: 4301110.48 tokens/sec -> 0.22716835286350803 X Speedup
+Subtask: law analytics, AS: 3978023.85 tokens/sec, SPS: 1564435.41 tokens/sec -> 0.3932694898247028 X Speedup
+Subtask: grammar correction, AS: 136.45 tokens/sec, SPS: 181.05 tokens/sec -> 1.3268596555514842 X Speedup
+```
+
+Configuration:
+* Target: google-t5/t5-base
+* Approx: google-t5/t5-small
+* Temperature: 1
+* max token length: 30
+* gamma: 7
+
+```bash
+Overall Result: AS: 1081.95 tokens/sec, SPS: 549.34   tokens/sec -> 0.51 X Speedup
+Average alpha: 0.34
+Subtask Result: 
+Subtask: multi-turn, AS: 57.67 tokens/sec, SPS: 32.62 tokens/sec -> 0.5656320443904976 X Speedup
+Subtask: translation, AS: 920.22 tokens/sec, SPS: 388.61 tokens/sec -> 0.4223011888461455 X Speedup
+Subtask: summarization, AS: 20823192.57 tokens/sec, SPS: 8040546.15 tokens/sec -> 0.38613416857048255 X Speedup
+Subtask: qa, AS: 64.33 tokens/sec, SPS: 69.14 tokens/sec -> 1.074770713508472 X Speedup
+Subtask: math_reasoning, AS: 9029.51 tokens/sec, SPS: 8425.39 tokens/sec -> 0.9330949298466915 X Speedup
+Subtask: rag, AS: 18833205.34 tokens/sec, SPS: 2221323.38 tokens/sec -> 0.11794717574082372 X Speedup
+Subtask: law analytics, AS: 3881962.54 tokens/sec, SPS: 1518393.39 tokens/sec -> 0.3911406600023502 X Speedup
+Subtask: grammar correction, AS: 141.13 tokens/sec, SPS: 154.51 tokens/sec -> 1.0948062070431517 X Speedup
+```
+
+Configuration:
+* Target: google-t5/t5-base
+* Approx: google-t5/t5-small
+* Temperature: 0
+* max token length: 30
+* gamma: 5
+
+```bash
+Overall Result: AS: 1035.16 tokens/sec, SPS: 735.61   tokens/sec -> 0.71 X Speedup
+Average alpha: 0.40
+Subtask Result: 
+Subtask: multi-turn, AS: 53.67 tokens/sec, SPS: 38.83 tokens/sec -> 0.7234954350661449 X Speedup
+Subtask: translation, AS: 953.29 tokens/sec, SPS: 439.89 tokens/sec -> 0.46144405165269753 X Speedup
+Subtask: summarization, AS: 21672271.19 tokens/sec, SPS: 7799143.65 tokens/sec -> 0.35986738914556743 X Speedup
+Subtask: qa, AS: 65.03 tokens/sec, SPS: 81.71 tokens/sec -> 1.2564970013839765 X Speedup
+Subtask: math_reasoning, AS: 9099.16 tokens/sec, SPS: 12410.99 tokens/sec -> 1.3639709599567433 X Speedup
+Subtask: rag, AS: 19593982.27 tokens/sec, SPS: 4272686.83 tokens/sec -> 0.21806117669820674 X Speedup
+Subtask: law analytics, AS: 4021463.13 tokens/sec, SPS: 1583827.02 tokens/sec -> 0.3938434765657046 X Speedup
+Subtask: grammar correction, AS: 135.53 tokens/sec, SPS: 180.57 tokens/sec -> 1.3323249465063085 X Speedup
+```
+
+Configuration:
+* Target: google-t5/t5-base
+* Approx: google-t5/t5-small
+* Temperature: 1
+* max token length: 30
+* gamma: 5
+
+```bash
+Overall Result: AS: 1086.72 tokens/sec, SPS: 637.77   tokens/sec → 0.59 X Speedup
+Average alpha: 0.35
+Subtask Result:
+Subtask: multi-turn, AS: 57.94 tokens/sec, SPS: 36.41 tokens/sec → 0.6284086986537797 X Speedup
+Subtask: translation, AS: 981.69 tokens/sec, SPS: 336.05 tokens/sec → 0.3423178396438794 X Speedup
+Subtask: summarization, AS: 21877590.89 tokens/sec, SPS: 8132686.28 tokens/sec → 0.3717359155718265 X Speedup
+Subtask: qa, AS: 65.74 tokens/sec, SPS: 70.45 tokens/sec → 1.0716458777000306 X Speedup
+Subtask: math_reasoning, AS: 9055.9 tokens/sec, SPS: 6463.84 tokens/sec → 0.713771132631765 X Speedup
+Subtask: rag, AS: 19076138.12 tokens/sec, SPS: 2238696.17 tokens/sec → 0.11735583774437464 X Speedup
+Subtask: law analytics, AS: 3914333.65 tokens/sec, SPS: 1534270.19 tokens/sec → 0.39196203675688196 X Speedup
+Subtask: grammar correction, AS: 134.51 tokens/sec, SPS: 157.64 tokens/sec → 1.1719574752806483 X Speedup
+```
 
