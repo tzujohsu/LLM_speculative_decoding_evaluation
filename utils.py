@@ -25,28 +25,7 @@ def load_data(jsonl_file):
                 subtasks.append(data['category'])
     return texts, subtasks
 
-def check_function(target_model, draft_model, tokenizer, inputs_sample, MAX_NEW_TOKENS, AS, SPS):
-    """
-    check if all functions work
-    """
-    tokens = target_model.generate(**inputs_sample, max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
-    print("HF's generate")
-    print("Count of new tokens:", len(tokens[0]) - len(inputs_sample.input_ids))
-    print(tokenizer.decode(tokens[0]))
-    print("******")
 
-    tokens = AS(target_model, initial_prompt_seq=inputs_sample.input_ids, target_len=MAX_NEW_TOKENS+len(inputs_sample.input_ids), temperature=TEMPERATURE)
-    print("Naive Autoregressive with temperature")
-    print("Count of new tokens:", len(tokens[0]) - len(inputs_sample.input_ids))
-    print(tokenizer.decode(tokens[0]))
-    print("******")
-
-    tokens = SPS(target_model, draft_model, prefix=inputs_sample.input_ids, target_len=MAX_NEW_TOKENS+len(inputs_sample.input_ids), tokenizer=tokenizer, temperature=TEMPERATURE, debug=False)
-    print("Speculative Sampling with temperature")
-    print("Count of new tokens:", len(tokens[0]) - len(inputs_sample.input_ids))
-    print(tokenizer.decode(tokens[0]))
-    print("******")
-    print()
 
 def get_distribution(logits, temperature):
     probs = torch.softmax(logits / (temperature + 1e-10), dim=-1)
@@ -60,6 +39,7 @@ def sample_from_draft_model(model, initial_prompt_seq, gamma, temperature=1.0):
     fin_prompt_seq = initial_prompt_seq.detach().clone()
     out_logits = []
 
+
     for _ in range(gamma):
         sample_token_logits = model(fin_prompt_seq).logits[:, -1, :]
         sample_token = sample(sample_token_logits, temperature=temperature)
@@ -68,4 +48,5 @@ def sample_from_draft_model(model, initial_prompt_seq, gamma, temperature=1.0):
 
     out_logits = torch.stack(out_logits, dim=1)
     return fin_prompt_seq, out_logits
+
     

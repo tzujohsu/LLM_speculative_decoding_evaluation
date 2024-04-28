@@ -1,6 +1,9 @@
 import torch
 import json
 
+torch.backends.cudnn.benchmark =  True
+torch.backends.cudnn.enabled =  True
+
 def load_data(jsonl_file):
     texts, subtasks = [], []
     multi = ['writing', 'roleplay', 'reasoning', 'math', 'coding', 'extraction', 'stem', 'humanities']

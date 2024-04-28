@@ -1,6 +1,9 @@
 import torch
 from utils_updated import sample
 
+torch.backends.cudnn.benchmark =  True
+torch.backends.cudnn.enabled =  True
+
 def autoregressive_sampling(model, initial_prompt_seq, target_len, temperature=1.0):
     fin_prompt_seq = initial_prompt_seq.detach().clone()
 

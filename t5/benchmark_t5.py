@@ -10,6 +10,9 @@ from utils_updated import load_data, check_function
 import numpy as np
 import argparse
 
+torch.backends.cudnn.benchmark =  True
+torch.backends.cudnn.enabled =  True
+
 
 #%%
 
@@ -35,12 +38,12 @@ args = parse_arguments()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 if "t5" in args.target_model_name.lower():
-    target_model = AutoModelForSeq2SeqLM.from_pretrained(args.target_model_name).to(device)
+    target_model = AutoModelForSeq2SeqLM.from_pretrained(args.target_model_name).to(device).bfloat16()
 else:
     target_model = AutoModelForCausalLM.from_pretrained(args.target_model_name).to(device)
 
 if "t5" in args.approx_model_name.lower():
-    draft_model = AutoModelForSeq2SeqLM.from_pretrained(args.approx_model_name).to(device)
+    draft_model = AutoModelForSeq2SeqLM.from_pretrained(args.approx_model_name).to(device).bfloat16()
 else:
     draft_model = AutoModelForCausalLM.from_pretrained(args.approx_model_name).to(device)
 
@@ -80,6 +83,8 @@ tokens = autoregressive_sampling(target_model, initial_prompt_seq=inputs_sample.
 time_taken = 0
 new_tokens = 0
 for i in tqdm(range(len(texts))):
+  # Empty cache
+  torch.cuda.empty_cache()
   if subtasks[i] == 'multi-turn':
     turns = texts[i][0]
     tmp_new_tokens, tmp_time_taken = 0, 0
@@ -131,6 +136,9 @@ for i in tqdm(range(len(texts))):
 print(f"Throughput (Autoregressive Sampling): {new_tokens/time_taken:.2f} tok/s")
 overall_result_as = new_tokens/time_taken
 
+# Empty cache
+torch.cuda.empty_cache()
+
 #%%
 ## Speculative Sampling
 # Warmup
@@ -143,7 +151,8 @@ new_tokens = 0
 alphas = torch.tensor([alpha], device=device)
 
 for i in tqdm(range(len(texts))):
-
+  # Empty cache
+  torch.cuda.empty_cache()
   if subtasks[i] == 'multi-turn':
     turns = texts[i][0]
     tmp_new_tokens, tmp_time_taken = 0, 0

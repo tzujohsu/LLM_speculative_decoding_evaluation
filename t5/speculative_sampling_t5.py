@@ -2,6 +2,9 @@ import torch
 from utils_updated import sample_from_draft_model, get_distribution, sample
 from transformers import AutoTokenizer
 
+torch.backends.cudnn.benchmark =  True
+torch.backends.cudnn.enabled =  True
+
 def speculative_sampling(target_model, draft_model, prefix, target_len, tokenizer, gamma=4, temperature=1.0):
     '''
     Implementation of Algorithm 2 of the paper - Accelerating Large Language Model Decoding
