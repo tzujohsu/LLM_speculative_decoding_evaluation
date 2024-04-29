@@ -1,4 +1,6 @@
-### Accerlating LLM inference with speculative decoding and BiLD
+### Accerlating LLM inference with SPS and BiLD
+
+Project repo for eecs598:llm
 
 To run the experiment:
 ```
