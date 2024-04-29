@@ -1,4 +1,4 @@
-### A repo for llm project
+### Accerlating LLM inference with speculative decoding and BiLD
 
 To run the experiment:
 ```

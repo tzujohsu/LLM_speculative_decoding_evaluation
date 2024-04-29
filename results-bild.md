@@ -274,3 +274,28 @@ Subtask: grammar correction, AS: 46.72 tokens/sec, SPS: 67.92 tokens/sec -> 1.45
 Subtask: grammar correction, AS: 46.72 tokens/sec, BiLD: 53.95 tokens/sec -> 1.1547517123287672 X Speedup
 ```
 
+python benchmark.py    \
+ --target_model_name bigscience/bloom-7b1     \
+ --approx_model_name bigscience/bloom-560m    \
+ --temperature 0     \
+ --max_tokens 30    \
+ --fallback_thres 0.6 \
+ --rollback_thres 5
+
+ ```bash
+Translation Result: AS: 42661.76 tokens/sec, SPS: 49538.88         tokens/sec -> 1.16 X Speedup
+Translation Result: AS: 42661.76 tokens/sec, BiLD: 57996.47         tokens/sec -> 1.36 X Speedup
+ ```
+
+* Target: lmsys/vicuna-7b-v1.3
+* Approx:  double7/vicuna-68m
+* Temperature: 0
+* max token length: 30
+* gamma: 4
+* fallback_thres: 0.5
+* rollback_thres: 5
+
+```bash
+Overall Result: AS: 52680.77 tokens/sec, SPS: 68467.79         tokens/sec -> 1.3 X Speedup
+Overall Result: AS: 52680.77 tokens/sec, BiLD: 75381.69         tokens/sec -> 1.43 X Speedup
+```

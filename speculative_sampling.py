@@ -4,8 +4,8 @@ from transformers import AutoTokenizer
 
 def speculative_sampling(target_model, draft_model, prefix, target_len, tokenizer, gamma=4, temperature=1.0):
     '''
-    Implementation of Algorithm 2 of the paper - Accelerating Large Language Model Decoding 
-    with Speculative Sampling (https://arxiv.org/abs/2302.01318)
+    Implementation of Algorithm 2 of the paper - Accelerating Large Language Model Decoding (https://arxiv.org/abs/2302.01318)
+    Referenced https://github.com/lucidrains/speculative-decoding
     '''
     assert prefix.shape[0] == 1, 'Batch size should be 1'
 

@@ -8,7 +8,9 @@ crossentropy_loss = nn.CrossEntropyLoss(reduce=False)
 
 def BiLD(target_model, draft_model, prefix, target_len, fallback_threshold, rollback_threshold, temperature=1.0):
     """
-    implementation of Algorithm 1 from https://arxiv.org/pdf/2302.07863
+    implementation of Algorithm 1 from 
+    https://arxiv.org/pdf/2302.07863
+    referenced the official repository: https://github.com/kssteven418/BigLittleDecoder/blob/ad37f5641d403c955e7e7c90d946b0ebc3986eb1/src/transformers/models/t5/modeling_t5.py#L1885
     """
     assert prefix.shape[0] == 1, 'Batch size should be 1'
 

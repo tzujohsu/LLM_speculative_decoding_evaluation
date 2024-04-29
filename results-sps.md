@@ -275,3 +275,21 @@ Subtask: law analytics, AS: 3914333.65 tokens/sec, SPS: 1534270.19 tokens/sec â†
 Subtask: grammar correction, AS: 134.51 tokens/sec, SPS: 157.64 tokens/sec â†’ 1.1719574752806483 X Speedup
 ```
 
+BLOOM 7b and 560m
+Overall Result: AS: 450.38 tokens/sec, SPS: 462.44         tokens/sec -> 1.03 X Speedup
+
+```bash
+Overall Result: AS: 450.38 tokens/sec, SPS: 462.44         tokens/sec -> 1.03 X Speedup
+==================
+Subtask Result: 
+Subtask: multi-turn, AS: 33.22 tokens/sec, SPS: 39.5 tokens/sec -> 1.1890427453341361 X Speedup
+Subtask: translation, AS: 266.78 tokens/sec, SPS: 168.07 tokens/sec -> 0.6299947522303022 X Speedup
+Subtask: summarization, AS: 30319919.33 tokens/sec, SPS: 30311916.92 tokens/sec -> 0.999736067569544 X Speedup
+Subtask: qa, AS: 24.24 tokens/sec, SPS: 24.84 tokens/sec -> 1.0247524752475248 X Speedup
+Subtask: math_reasoning, AS: 2958.9 tokens/sec, SPS: 3569.14 tokens/sec -> 1.206238804961303 X Speedup
+Subtask: rag, AS: 29550842.84 tokens/sec, SPS: 28427736.2 tokens/sec -> 0.9619940911302954 X Speedup
+Subtask: law analytics, AS: 5983127.66 tokens/sec, SPS: 5718190.34 tokens/sec -> 0.9557192600500187 X Speedup
+
+Subtask: grammar correction, AS: 43.03 tokens/sec, SPS: 45.99 tokens/sec -> 1.0687892168254707 X Speedup
+
+```

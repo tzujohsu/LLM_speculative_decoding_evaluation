@@ -27,7 +27,7 @@ def parse_arguments():
     parser.add_argument('--output_dir', '-o', type=str, default='/outputs', help='output-txt')
     parser.add_argument('--subtask_result', type=bool, default=True, help='whether print out subtask result')
     parser.add_argument('--SPS', type=bool, default=True, help='whether to run Speculative Sampling')
-    parser.add_argument('--BiLD', type=bool, default=True, help='whether to run BiLD')
+    parser.add_argument('--BiLD', type=bool, default=False, help='whether to run BiLD')
     parser.add_argument('--fallback_thres', type=float, default=0.6, help='fallback threshold for BiLD')
     parser.add_argument('--rollback_thres', type=int, default=3, help='rollback threshold for BiLD')
     args = parser.parse_args()
@@ -76,6 +76,7 @@ tokens = autoregressive_sampling(target_model, initial_prompt_seq=inputs_sample.
 time_taken = 0
 new_tokens = 0
 for i in tqdm(range(len(texts))):
+# for i in tqdm(range(81+80, 81+80+80)):
   if subtasks[i] == 'multi-turn':
     turns = texts[i][0]
     tmp_new_tokens, tmp_time_taken = 0, 0
@@ -130,7 +131,7 @@ overall_result_as = new_tokens/time_taken
 #%%
 ## Speculative Sampling
 # Warmup
-if args.SPS:
+if args.SPS == True:
     print("Benchmarking Speculative Sampling...")
     tokens = speculative_sampling(target_model, draft_model, prefix=inputs_sample.input_ids, 
                                 target_len=MAX_NEW_TOKENS+len(inputs_sample.input_ids), tokenizer=tokenizer, temperature=TEMPERATURE)
@@ -138,6 +139,7 @@ if args.SPS:
     time_taken = 0
     new_tokens = 0
     for i in tqdm(range(len(texts))):
+    
         if subtasks[i] == 'multi-turn':
             turns = texts[i][0]
             tmp_new_tokens, tmp_time_taken = 0, 0
@@ -192,16 +194,18 @@ if args.SPS:
 
 
 #%%
-if args.BiLD:
+if args.BiLD == True:
     print("Benchmarking BiLD...")
     tokens = BiLD(target_model, draft_model, prefix=inputs.input_ids, target_len=MAX_NEW_TOKENS+len(inputs_sample.input_ids), 
                             temperature=TEMPERATURE, fallback_threshold=args.fallback_thres, rollback_threshold=args.rollback_thres)
+    print("warm up done")
     time_taken = 0
     new_tokens = 0
     for i in tqdm(range(len(texts))):
+    # for i in tqdm(range(81+80, 81+80+80)):
 
         if subtasks[i] == 'multi-turn':
-            turns = texts[i][0]
+            turns = texts[i][0][:200]
             tmp_new_tokens, tmp_time_taken = 0, 0
             # turn 1
             inputs = tokenizer(turns[0], return_tensors="pt").to(device)
