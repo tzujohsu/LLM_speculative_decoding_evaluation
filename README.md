@@ -1,4 +1,4 @@
-### Accerlating LLM inference with SPS and BiLD
+### Accelerating LLM inference with SPS and BiLD
 
 Speculative Decoding has emerged as a pivotal approach in enhancing the efficiency of Large Language Models (LLMs), addressing the critical challenge of inference latency primarily caused by memory-bound computation limitations. The motivation is to explore how Speculative Decoding can be effectively adapted across different model series and configurations.
 
