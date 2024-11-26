@@ -19,3 +19,7 @@ python benchmark.py    \
 ```
 
 This is a project repo for eecs598:llm course.
+
+<p align="center">
+    <img src="speedup-plot.png" alt="speed up plot" width="400">
+</p>
